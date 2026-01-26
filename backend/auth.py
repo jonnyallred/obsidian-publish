@@ -1,4 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, current_app
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 from email_service import send_magic_link, is_valid_email
 from models import MagicLink, Session, Database
 from config import Config
@@ -11,6 +13,13 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+# Rate limiter (will be initialized by app)
+limiter = Limiter(
+    key_func=get_remote_address,
+    default_limits=["200 per day", "50 per hour"],
+    storage_uri="memory://"
+)
+
 
 @bp.route('/login', methods=['GET'])
 def login():
@@ -19,6 +28,7 @@ def login():
 
 
 @bp.route('/request-link', methods=['POST'])
+@limiter.limit("5 per hour")
 def request_magic_link():
     """Generate and send a magic link"""
     email = request.form.get('email', '').strip().lower()

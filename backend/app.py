@@ -3,7 +3,7 @@ import logging
 from datetime import timedelta
 from flask import Flask, session, request, redirect, url_for, jsonify
 from config import Config
-from auth import bp as auth_bp
+from auth import bp as auth_bp, limiter as auth_limiter
 import static_auth
 from discovery import find_orphaned_pages, get_page_metadata
 
@@ -20,6 +20,9 @@ app = Flask(__name__, template_folder='templates')
 # Load configuration
 app.config.from_object(Config)
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=Config.SESSION_TIMEOUT_DAYS)
+
+# Initialize rate limiter
+auth_limiter.init_app(app)
 
 # Register authentication blueprint
 app.register_blueprint(auth_bp)
