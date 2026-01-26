@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Your Email</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif Pro', Georgia, serif;
+            background: linear-gradient(135deg, #f5f3f0 0%, #e8e4df 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            line-height: 1.6;
+        }
+
+        .check-email-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem 2rem;
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            color: #2b2b2b;
+        }
+
+        .email-display {
+            background-color: #f0f0f0;
+            padding: 0.75rem 1rem;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            font-weight: 500;
+            color: #284b63;
+            word-break: break-all;
+        }
+
+        .instructions {
+            color: #555;
+            margin: 1.5rem 0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+        }
+
+        .instructions strong {
+            color: #2b2b2b;
+        }
+
+        .steps {
+            text-align: left;
+            background-color: #f9f7f4;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #84a59d;
+        }
+
+        .steps ol {
+            margin: 0;
+            padding-left: 1.5rem;
+        }
+
+        .steps li {
+            margin-bottom: 0.75rem;
+            color: #555;
+        }
+
+        .steps li strong {
+            color: #2b2b2b;
+        }
+
+        .note {
+            color: #999;
+            font-size: 0.85rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #eee;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #284b63;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            .check-email-container {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            .icon {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="check-email-container">
+        <div class="icon">✉️</div>
+        <h1>Check Your Email</h1>
+
+        <p class="instructions">
+            We've sent a secure login link to<br/>
+            <span class="email-display">{{ email }}</span>
+        </p>
+
+        <div class="steps">
+            <ol>
+                <li>Open your email inbox</li>
+                <li>Find the message from us</li>
+                <li>Click the <strong>Log In</strong> button</li>
+            </ol>
+        </div>
+
+        <p class="instructions">
+            The link expires in <strong>15 minutes</strong>, so please log in soon.
+        </p>
+
+        <p class="note">
+            <strong>Didn't receive an email?</strong> Check your spam folder, or <a href="/auth/login" style="color: #284b63;">try again</a>.
+        </p>
+
+        <a href="/auth/login" class="back-link">← Back to login</a>
+    </div>
+</body>
+</html>

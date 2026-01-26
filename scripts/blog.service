@@ -1,0 +1,19 @@
+[Unit]
+Description=Authenticated Blog
+After=network.target
+
+[Service]
+Type=simple
+User=jonny
+WorkingDirectory=/home/jonny/projects/obsidian-writings/backend
+ExecStart=/usr/bin/python3 app.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+Environment="PATH=/home/jonny/.local/bin:/usr/local/bin:/usr/bin:/bin"
+Environment="PYTHONUNBUFFERED=1"
+
+[Install]
+WantedBy=multi-user.target

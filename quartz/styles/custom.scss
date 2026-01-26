@@ -1,0 +1,109 @@
+@use "./base.scss";
+
+// Elegant typography with serif fonts and improved line spacing
+body {
+  line-height: 1.7;
+  letter-spacing: 0.3px;
+}
+
+// Heading typography
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+}
+
+h1 {
+  font-size: 2.2rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+// Article content styling
+article {
+  line-height: 1.7;
+  max-width: 800px;
+}
+
+// Improved blockquote styling
+blockquote {
+  border-left: 4px solid var(--secondary);
+  padding-left: 1rem;
+  margin-left: 0;
+  color: var(--darkgray);
+  font-style: italic;
+  line-height: 1.8;
+}
+
+// Code block styling
+code {
+  font-size: 0.9em;
+}
+
+pre {
+  background-color: var(--lightgray);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  line-height: 1.5;
+}
+
+// Link styling
+a {
+  color: var(--secondary);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+a:hover {
+  border-bottom-color: var(--secondary);
+  color: var(--tertiary);
+}
+
+// Improved paragraph spacing
+p {
+  margin-bottom: 1.2em;
+}
+
+// List styling
+ul, ol {
+  margin-bottom: 1.2em;
+  padding-left: 1.5em;
+}
+
+li {
+  margin-bottom: 0.5em;
+  line-height: 1.7;
+}
+
+// Mobile responsiveness
+@media (max-width: 768px) {
+  body {
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.4rem;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+  }
+
+  article {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+}

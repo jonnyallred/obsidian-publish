@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Serif Pro', Georgia, serif;
+            background: linear-gradient(135deg, #f5f3f0 0%, #e8e4df 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            line-height: 1.6;
+        }
+
+        .login-container {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 3rem 2rem;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #2b2b2b;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #2b2b2b;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        input[type="email"]:focus {
+            outline: none;
+            border-color: #284b63;
+            box-shadow: 0 0 0 3px rgba(40, 75, 99, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background-color: #284b63;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        button:hover {
+            background-color: #1a2f42;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .info {
+            margin-top: 2rem;
+            padding: 1rem;
+            background-color: #f9f7f4;
+            border-left: 4px solid #84a59d;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .info strong {
+            color: #2b2b2b;
+        }
+
+        @media (max-width: 600px) {
+            .login-container {
+                padding: 2rem 1.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>Welcome</h1>
+        <p class="subtitle">Enter your email to log in</p>
+
+        <form method="POST" action="/auth/request-link">
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    autofocus
+                    placeholder="you@example.com"
+                >
+            </div>
+
+            <button type="submit">Send Login Link</button>
+        </form>
+
+        <div class="info">
+            <strong>How it works:</strong>
+            We'll send a secure login link to your email. Click it to log in instantly—no password needed.
+        </div>
+    </div>
+</body>
+</html>
