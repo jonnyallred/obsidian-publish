@@ -21,11 +21,18 @@ This project is a complete authenticated blog system built with Quartz 4, Flask,
    Edit `.env` with your settings:
    ```bash
    SECRET_KEY=<generate new with: python3 -c "import secrets; print(secrets.token_hex(32))">
-   MAILGUN_API_KEY=<your mailgun key>
+   MAILGUN_API_KEY=<your mailgun private API key>
    MAILGUN_DOMAIN=mg.yourdomain.com
-   FROM_EMAIL=noreply@yourdomain.com
-   BASE_URL=https://yourdomain.com
+   FROM_EMAIL=noreply@mg.yourdomain.com
+   BASE_URL=http://localhost:5000  (or your production domain)
    ```
+
+   **Important Mailgun Notes:**
+   - Use your **Private API Key** from Mailgun dashboard (not the public key)
+   - Domain must be your **Mailgun domain** (e.g., `mg.yourdomain.com`)
+   - FROM_EMAIL must be from your Mailgun domain, not an external address
+   - Double-check domain spelling - typos will cause 401 auth errors
+   - Verify your domain is in "active" state in Mailgun dashboard
 
 3. **Initialize database:**
    ```bash
@@ -204,19 +211,83 @@ Add to crontab:
 - [ ] Email feedback links have correct subject
 
 ### Testing Magic Link Flow
-1. Visit `http://localhost:5000`
-2. Enter email address
-3. Check email inbox/spam for link
-4. Click link
-5. Should redirect to homepage (authenticated)
-6. Open `/api/orphans` to verify API works
+
+**Complete end-to-end test:**
+
+1. Start Flask app:
+   ```bash
+   python3 backend/app.py
+   ```
+
+2. Open browser and visit `http://localhost:5000`
+   - Should redirect to `/auth/login`
+
+3. Enter your email address and click "Send Login Link"
+   - Should see "Check Your Email" page
+
+4. Check your email inbox (or spam folder)
+   - Look for email from `noreply@mg.yourdomain.com`
+   - Subject: "Your login link for My Blog"
+
+5. Click the "Log In" button in the email (or copy link and paste)
+   - Should redirect to homepage
+   - Should show your published content
+
+6. Verify authentication is working:
+   - Navigate between pages (no redirect to login)
+   - Open `http://localhost:5000/api/orphans`
+   - Should return JSON with orphaned pages list
+
+7. Test logout:
+   - Look for logout button or manually visit `/auth/logout`
+   - Should redirect to login page
+   - Visiting any page now redirects to login
 
 ## Troubleshooting
 
-### Email not sending
-- Check `.env` has correct Mailgun credentials
-- Verify Mailgun domain is configured
-- Check Flask app logs: `tail -f backend/app.log`
+### Email not sending (401 Forbidden)
+Common Mailgun issues:
+
+1. **Invalid API Key**
+   - Verify you're using the **Private API Key** (not public key)
+   - Copy from Mailgun dashboard: Settings → API Keys
+   - Test with: `python3 backend/models.py` (won't work but tests credentials)
+
+2. **Domain name typo**
+   - Check spelling carefully: `mg.jonathan-allred.com` vs `mg.jonthan-allred.com`
+   - List your domains: Use Mailgun dashboard to verify exact name
+   - Must match exactly with what's in Mailgun
+
+3. **Domain not active**
+   - Go to Mailgun dashboard → Domains
+   - Verify domain status is "Active"
+   - Complete DNS verification if required
+
+4. **Wrong FROM_EMAIL**
+   - Must be from your **Mailgun domain**, not external address
+   - ❌ Wrong: `noreply@gmail.com`
+   - ✓ Correct: `noreply@mg.yourdomain.com`
+
+5. **Verify credentials**
+   ```bash
+   python3 << 'EOF'
+   import sys, requests
+   sys.path.insert(0, 'backend')
+   from config import Config
+
+   response = requests.get(
+       "https://api.mailgun.net/v3/domains",
+       auth=("api", Config.MAILGUN_API_KEY),
+       timeout=10
+   )
+   print(f"Status: {response.status_code}")
+   if response.status_code == 200:
+       print("✓ API Key valid!")
+       print(f"Domains: {[d['name'] for d in response.json()['items']]}")
+   else:
+       print("✗ Invalid credentials")
+   EOF
+   ```
 
 ### Database errors
 - Delete `backend/database.db` to reset
