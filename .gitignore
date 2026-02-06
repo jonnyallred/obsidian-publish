@@ -1,6 +1,7 @@
 # Build outputs
 public/
 .quartz-cache/
+tsconfig.tsbuildinfo
 
 # Python
 backend/__pycache__/
