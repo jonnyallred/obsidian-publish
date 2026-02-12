@@ -100,14 +100,26 @@ tags:
 
 Only pages with `publish: true` appear in the built site.
 
+### Content Sync
+
+Content lives in a separate repo (`git@github.com:jonnyallred/writings.git`). The build script automatically clones or pulls it into `content/` before building. You don't need to manage `content/` manually.
+
 ### Building Content
 
 ```bash
-# Build static site (only published content)
+# Build static site (syncs content, then builds)
+./scripts/build.sh
+
+# Or build without syncing (if content/ already exists)
 npx quartz build
 
-# View in browser (requires authentication)
-# http://localhost:5000
+# Preview without auth (Quartz dev server)
+npx quartz build --serve
+# Visit http://localhost:8080
+
+# View with auth (Flask backend)
+python3 backend/app.py
+# Visit http://localhost:5000
 ```
 
 ## API Endpoints

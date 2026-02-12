@@ -2,6 +2,9 @@
 public/
 .quartz-cache/
 
+# Content (synced from separate repo)
+content/
+
 # Python
 backend/__pycache__/
 backend/*.pyc
